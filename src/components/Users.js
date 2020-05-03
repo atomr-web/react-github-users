@@ -3,7 +3,7 @@ import { Grid, LinearProgress, Typography } from '@material-ui/core'
 import ErrorIcon from '@material-ui/icons/Error';
 import { User } from './User'
 
-export function Users(props) {
+export const Users = (props) => {
     const error = props.error;
     const users = props.users;
     const isLoading = props.isLoading

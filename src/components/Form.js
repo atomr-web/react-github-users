@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-export function Form(props) {
+export const Form = (props) => {
     return (
         <form onSubmit={props.getUsers}>
             <Grid container spacing={3} alignItems="flex-end">

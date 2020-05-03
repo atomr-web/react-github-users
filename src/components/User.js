@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     },
 })
 
-export function User(props) {
+export const User = (props) => {
     const classes = useStyles();    
 
     return (

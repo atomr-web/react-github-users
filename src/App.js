@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Container, Typography } from '@material-ui/core';
 import { Form } from './components/Form'
@@ -7,70 +7,54 @@ import { Footer } from './components/Footer'
 
 const url = 'https://api.github.com/search/users?q=';
 
-export class App extends React.Component {
-  constructor(props) {
-    super(props)
+export const App = () => {
 
-    this.state = {
-      users: [],
-      isLoading: false,
-      error: null
-    }
+  const [users, setUsers] = useState( [] );
+  const [isLoading, setIsLoading] = useState( false );
+  const [error, setError] = useState( null );
 
-    this.getUsers = this.getUsers.bind(this);
-  }
-
-  getUsers(e) {
+  const getUsers = (e) => {
     e.preventDefault();
 
-    this.setState({
-      isLoading: true
-    })
+    setIsLoading(true);
 
     fetch(url + e.target.querySelector('input').value)
       .then(res => res.json())
       .then(
         (result) => {
-          this.setState({
-            isLoading: false,
-            users: result.items,
-          })
+          setIsLoading(false);
+          setUsers(result.items)
         },
         (error) => {
-          this.setState({
-            isLoading: true,
-            error
-          })
+          setIsLoading(true);
+          setError(error);
         }
       )
       .then(
         e.target.querySelector('input').value = ''
       )
   }
+  
+  return (
+    <div className="app">
+      <Container maxWidth="sm">
+        <Typography variant="h4" align="center">
+          Search github users
+          </Typography>
+        <Form
+          getUsers={getUsers}
+        />
+      </Container>
 
-  render() {
-    return (
-      <div className="app">
-        <Container maxWidth="sm">
-          <Typography variant="h4" align="center">
-            Search github users
-            </Typography>
-          <Form
-            inputText={this.state.inputText}
-            getUsers={this.getUsers}
-          />
-        </Container>
+      <Container maxWidth="lg">
+        <Users
+          users={users}
+          isLoading={isLoading}
+          error={error}
+        />
+      </Container>
 
-        <Container maxWidth="lg">
-          <Users
-            users={this.state.users}
-            isLoading={this.state.isLoading}
-            error={this.state.error}
-          />
-        </Container>
-
-        <Footer />
-      </div>
-    )
-  }
+      <Footer />
+    </div>
+  )
 }

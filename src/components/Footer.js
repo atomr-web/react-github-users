@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Grid, Link, Typography } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-export function Footer(props) {
+export const Footer = () => {
     return (
         <footer>
             <Container>
